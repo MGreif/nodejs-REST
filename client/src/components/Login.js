@@ -6,6 +6,9 @@ import Button from '@material-ui/core/Button';
 
 export const LoginDialog = (props) => {
 
+  const [username,setUsername] = React.useState(null)
+  const [password,setPassword] = React.useState(null)
+
   const classes = makeStyles({
     dialog:{
       position:"absolute",
@@ -42,7 +45,10 @@ export const LoginDialog = (props) => {
 
 
   const login = () => {
-    props.onLogin()
+    if(username && password){
+      props.onLogin({username,password})
+    }
+    console.error("username or password invalid")
   }
 
   return (
