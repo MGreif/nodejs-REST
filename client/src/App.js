@@ -3,6 +3,8 @@ import logo from './logo.svg';
 import './App.css';
 import {MemoCard} from './components/MemoCard'
 import {Header} from './components/Header'
+import {Navigation} from './components/Navigation'
+import {LoginDialog} from './components/Login'
 import {
   BrowserRouter as Router,
   Switch,
@@ -10,17 +12,36 @@ import {
   Link
 } from "react-router-dom";
 
-function App() {
+class App extends React.Component {
+  constructor(props){
+    super(props);
+    this.refresh = this.refresh.bind(this);
+    this.state = {
+      loggedIn:false
+    }
+  }
 
-  
-  return (
-    <Fragment>
-      <Header title="HomePage"/>
-    <div className="App">
-      <MemoCard width="300" maxHeight="150" title="ABC" description="TExt"/>
-    </div>
-    </Fragment>
-  );
+  refresh(){
+    this.forceUpdate()
+  }
+
+  onLogin = () => {
+    this.setState({...this.state,loggedIn:true})
+  }
+
+  render() {
+
+    if(!this.state.loggedIn) return <LoginDialog onLogin={this.onLogin}/>
+
+
+    return (
+      <Fragment>
+        <Header title="HomePage"/>
+        <Navigation onClick={this.refresh}/>
+
+      </Fragment>
+    );
+  }
 }
 
 export default App;
