@@ -13,8 +13,6 @@ import {
 function App() {
 
   
-
-
   return (
     <Fragment>
       <Header title="HomePage"/>
