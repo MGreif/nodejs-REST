@@ -1,6 +1,5 @@
 import React from 'react'
 import { makeStyles } from '@material-ui/core/styles';
-import color from '@material-ui/core/colors/amber';
 import Typography from '@material-ui/core/Typography';
 
 
