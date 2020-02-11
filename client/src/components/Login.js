@@ -6,63 +6,71 @@ import Button from '@material-ui/core/Button';
 
 export const LoginDialog = (props) => {
 
-  const [username,setUsername] = React.useState(null)
-  const [password,setPassword] = React.useState(null)
+  const [username, setUsername] = React.useState(null)
+  const [password, setPassword] = React.useState(null)
 
   const classes = makeStyles({
-    dialog:{
-      position:"absolute",
+    dialog: {
+      position: "absolute",
       width: "50vw",
-      height:"50vh",
-      top:"25vh",
-      left:"25vw",
+      height: "50vh",
+      top: "25vh",
+      left: "25vw",
       padding: "10px",
-      borderRadius:"1em"
+      borderRadius: "1em"
     },
-    background:{
-      position:"absolute",
-      height:"100vh",
-      width:"100vw",
-      backgroundColor:"gray"
+    background: {
+      position: "absolute",
+      height: "100vh",
+      width: "100vw",
+      backgroundColor: "gray"
     },
-    innerContent:{
-      position:"relative",
-      margin:"0 10vw",
-      height:"40vh",
-      textAlign:"center",
-      display:"flex",
-      flexDirection:"column"
+    innerContent: {
+      position: "relative",
+      margin: "0 10vw",
+      height: "40vh",
+      textAlign: "center",
+      display: "flex",
+      flexDirection: "column"
     },
-    textField:{
-      '&:first-child':{marginTop:"11vh"},
-      margin:"2vh 0"
+    textField: {
+      '&:first-child': { marginTop: "11vh" },
+      margin: "2vh 0"
     },
-    button:{
-      margin:"2vh 10vh",
-      height:"6vh"
+    button: {
+      margin: "2vh 10vh",
+      height: "6vh"
     },
   })()
 
 
   const login = () => {
-    if(username && password){
-      props.onLogin({username,password})
+    if (username && password) {
+      var xhr = new XMLHttpRequest();
+      xhr.open("POST", "http://localhost:8080/users/login");
+      xhr.onreadystatechange = function () {
+        if(xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
+          console.log(xhr.responseText);
+        }
+      };
+      xhr.send(JSON.stringify({username,password}));
+      props.onLogin({ username, password })
     }
     console.error("username or password invalid")
   }
 
   return (
-  <div className={classes.background}>
-    <Card className={classes.dialog}>
-    <div className={classes.innerContent}>
-      <TextField className={classes.textField} id="outlined-basic" label="Username" variant="outlined" />
-      <TextField className={classes.textField} id="outlined-basic" label="Password" variant="outlined" />
-      <Button onClick={login} className={classes.button} variant="contained" color="primary">
-        Primary
+    <div className={classes.background}>
+      <Card className={classes.dialog}>
+        <div className={classes.innerContent}>
+          <TextField onChange={e => setUsername(e.target.value)} className={classes.textField} id="outlined-basic" label="Username" variant="outlined" />
+          <TextField onChange={e => setPassword(e.target.value)} className={classes.textField} id="outlined-basic" label="Password" variant="outlined" />
+          <Button onClick={login} className={classes.button} variant="contained" color="primary">
+            Primary
       </Button>
-    </div>
+        </div>
 
-    </Card>
-  </div>)
+      </Card>
+    </div>)
 
 }
