@@ -3,7 +3,7 @@ import { makeStyles } from '@material-ui/styles'
 import { Card } from '@material-ui/core'
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
-
+import {xhrSendRequest} from '../modules/xhr'
 export const LoginDialog = (props) => {
 
   const [username, setUsername] = React.useState(null)
@@ -48,6 +48,8 @@ export const LoginDialog = (props) => {
     if (username && password) {
       var xhr = new XMLHttpRequest();
       xhr.open("POST", "http://localhost:8080/users/login");
+      xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+      xhrSendRequest()
       xhr.onreadystatechange = function () {
         if(xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
           console.log(xhr.responseText);

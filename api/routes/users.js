@@ -4,9 +4,11 @@ var router = express.Router();
 /* GET users listing. */
 router.post('/login', function(req, res, next) {
   try{
-    console.log(req)
+    console.log(req.body)
+    res.end(JSON.stringify(req.body))
   } catch(ex){
     console.log(ex.message)
+    res.end(JSON.stringify(req.body))
   }
 });
 
