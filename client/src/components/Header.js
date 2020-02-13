@@ -25,7 +25,7 @@ export const Header = (props) => {
       fontSize:"2em",
       fontWeight:400,
       textAlign:"left",
-      paddingTop:"25px"
+      paddingTop:"25px",
     },
     version:{
       color:"white",
@@ -34,13 +34,22 @@ export const Header = (props) => {
       textAlign:"right",
       paddingTop:"25px"
     },
+    container:{
+      flex:1
+    },
   })()
 
   return(
     <div className={classes.header}>
-      <Typography className={classes.user} >{props.user || ""}</Typography>
+      <div className={classes.container}>
+      <Typography className={classes.user} >logged in as <b>{props.user || ""}</b></Typography>
+      </div>
+      <div className={classes.container}>
       <Typography className={classes.title} >{props.title || ""}</Typography>
+      </div>
+      <div className={classes.container}>
       <Typography className={classes.version} >{props.version || ""}</Typography>
+      </div>
     </div>
   )
 }

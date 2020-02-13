@@ -43,7 +43,6 @@ export const LoginDialog = (props) => {
     },
   })()
 
-
   const login = () => {
     if (username && password) {
       xhrSendRequest("http://localhost:8080/users/login",{username,password},(x)=>{
