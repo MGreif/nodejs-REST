@@ -1,8 +1,8 @@
 import React, { Fragment } from 'react'
 import Box from '@material-ui/core/Box';
 import Typography from '@material-ui/core/Typography';
-import UserList from './UserList'
-import UserAdd from './UserAdd'
+import UserList from './userCRUD/UserList'
+import UserAdd from './userCRUD/UserAdd'
 import {xhrSendRequest} from '../modules/xhr'
 
 

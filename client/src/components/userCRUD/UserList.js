@@ -8,10 +8,7 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import DeleteIcon from '@material-ui/icons/Delete';
-import Button from '@material-ui/core/Button';
-import IconButton from '@material-ui/core/IconButton';
-import EditIcon from '@material-ui/icons/Edit';
-import DialogComponent from './Dialog'
+import DialogComponent from '../Dialog'
 import UserEdit from './UserEdit'
 const StyledTableCell = withStyles(theme => ({
   head: {
