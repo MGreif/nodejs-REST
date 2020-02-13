@@ -25,8 +25,8 @@ class App extends React.Component {
     this.forceUpdate()
   }
 
-  onLogin = () => {
-    this.setState({...this.state,loggedIn:true})
+  onLogin = (userData) => {
+    this.setState({...this.state,loggedIn:true,user:{...userData}})
   }
 
   render() {

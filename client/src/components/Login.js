@@ -46,29 +46,26 @@ export const LoginDialog = (props) => {
 
   const login = () => {
     if (username && password) {
-      var xhr = new XMLHttpRequest();
-      xhr.open("POST", "http://localhost:8080/users/login");
-      xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
-      xhrSendRequest()
-      xhr.onreadystatechange = function () {
-        if(xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
-          console.log(xhr.responseText);
+      xhrSendRequest("http://localhost:8080/users/login",{username,password},(x)=>{
+        const response = JSON.parse(x.responseText)
+        console.log(response)
+        if(response.granted === true){
+          props.onLogin({...response.user})
         }
-      };
-      xhr.send(JSON.stringify({username,password}));
-      props.onLogin({ username, password })
+      })
+    }else{
+      console.error("username or password invalid")
     }
-    console.error("username or password invalid")
   }
 
   return (
     <div className={classes.background}>
       <Card className={classes.dialog}>
         <div className={classes.innerContent}>
-          <TextField onChange={e => setUsername(e.target.value)} className={classes.textField} id="outlined-basic" label="Username" variant="outlined" />
-          <TextField onChange={e => setPassword(e.target.value)} className={classes.textField} id="outlined-basic" label="Password" variant="outlined" />
+          <TextField onChange={e => setUsername(e.target.value)} className={classes.textField} label="Username" variant="outlined" />
+          <TextField onChange={e => setPassword(e.target.value)} className={classes.textField} label="Password" variant="outlined" />
           <Button onClick={login} className={classes.button} variant="contained" color="primary">
-            Primary
+            Login
       </Button>
         </div>
 
