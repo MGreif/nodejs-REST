@@ -26,7 +26,6 @@ export default function EditUser(props){
 
   const handleClose = () => {
     setOpen(false);
-    props.getUsers()
   };
 
   const updateUser = () =>{

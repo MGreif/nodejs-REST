@@ -25,7 +25,6 @@ export default function AddUser(props){
 
   const handleClose = () => {
     setOpen(false);
-    props.getUsers()
   };
 
   const save = () =>{

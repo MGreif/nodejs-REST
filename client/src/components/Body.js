@@ -19,7 +19,6 @@ export default class Body extends React.Component {
     return (
       <Typography
         component="div"
-        onClick={props.onClick?props.onClick:()=>{}}
         role="tabpanel"
         hidden={value !== index}
         id={`simple-tabpanel-${index}`}
@@ -42,11 +41,11 @@ export default class Body extends React.Component {
   }
 
   saveUser(content){
-    xhrSendRequest('http://localhost:8080/users/add',content)
+    xhrSendRequest('http://localhost:8080/users/add',content,()=>this.getUsers())
   }
 
   updateUser(id,content){
-    xhrSendRequest('http://localhost:8080/users/update/'+id,{id,content})
+    xhrSendRequest('http://localhost:8080/users/update/'+id,{id,content},()=>this.getUsers())
   }
 
   componentDidMount(){
@@ -66,7 +65,7 @@ export default class Body extends React.Component {
       <this.TabPanel value={this.props.value} index={2}>
         Item Three
       </this.TabPanel>
-      <this.TabPanel value={this.props.value} onClick={this.getUsers} index={3}>
+      <this.TabPanel value={this.props.value} index={3}>
         <UserList users={this.state.userList} getUsers={this.getUsers} updateUser={(id,content)=>this.updateUser(id,content)} deleteUser={id=>this.deleteUser(id)}/>
         <UserAdd saveUser={content=>this.saveUser(content)} getUsers={this.getUsers}/>
       </this.TabPanel>
