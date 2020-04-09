@@ -18,6 +18,22 @@ const connectMongo = (coll, cb) => {
   })
 }
 
+
+
+
+
+async function findMongoData(){
+  return new Promise((res,rej)=>{
+    mongoClient.connect(connectionURL,(err,db)=>{
+      resolve(db.db('restdb').collection('users').find({}).toArray())
+    })
+  })
+}
+
+
+
+
+
 const findByQuery = (coll, query, cb) => {
   connectMongo(coll,connection=>{
     connection.find(query).toArray((err, result) => {
@@ -44,7 +60,6 @@ const addByObject = (coll,object,cb)=>{
 
 const updateByObject = (coll,id,object,cb)=>{
   try{
-
     connectMongo(coll,mongo=>{
       mongo.updateMany({_id:new ObjectId(id)},{$set:object}).then(res=>cb(res))
     })
