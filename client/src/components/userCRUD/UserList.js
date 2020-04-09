@@ -70,7 +70,7 @@ export default class UserList extends React.Component {
               <StyledTableCell align="right">First Name</StyledTableCell>
               <StyledTableCell align="right">Last Name</StyledTableCell>
               <StyledTableCell align="right">Age</StyledTableCell>
-              <StyledTableCell align="right">ID</StyledTableCell>
+              <StyledTableCell align="center">ID</StyledTableCell>
               <StyledTableCell align="right"></StyledTableCell>
             </TableRow>
           </TableHead>
@@ -83,8 +83,8 @@ export default class UserList extends React.Component {
                 <StyledTableCell align="right">{user.namef}</StyledTableCell>
                 <StyledTableCell align="right">{user.namel}</StyledTableCell>
                 <StyledTableCell align="right">{user.age}</StyledTableCell>
-                <StyledTableCell align="right">{user._id}</StyledTableCell>
-                <StyledTableCell>
+                <StyledTableCell align="center">{user._id}</StyledTableCell>
+                <StyledTableCell align="center">
                   <DialogComponent opener={<DeleteIcon fontSize="small" />} 
                   dialogText="Wirklich löschen?" 
                   options={[
