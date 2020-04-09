@@ -27,49 +27,45 @@ router.post('/login', async function (req, res, next) {
   }
 });
 
-router.post('/delete/:id', (req, res) => {
-  removeById('users', req.params.id, (object) => { res.end(JSON.stringify({ success: true, amount: object.deletedCount })) })
+router.post('/delete/:id', async (req, res) => {
+  const result = await removeById('users', req.params.id)
+  res.end(JSON.stringify({ success: true, amount: result.deletedCount }))
 })
 
-router.post('/update/:id', (req, res) => {
+router.post('/update/:id', async (req, res) => {
 
   try {
     const body = req.body
     const content = { ...body.content }
     console.log(content)
     if(!content.password){
-      updateByObject('users', req.params.id, content, (obj) => res.end(JSON.stringify({ success: true, amount: obj.updatedCount })))
+        const result = await updateByObject('users', req.params.id, content)
+      res.end(JSON.stringify({ success: true, amount: result.modifiedCount  }))
     }else{
-      bcrypt.hash(content.password, 10, (err, hashed) => {
+      bcrypt.hash(content.password, 10, async (err, hashed) => {
         if (err) throw err
         content.password = hashed
-        updateByObject('users', req.params.id, content, (obj) => res.end(JSON.stringify({ success: true, amount: obj.updatedCount })))
+        const result = await  updateByObject('users', req.params.id, content )
+        res.end(JSON.stringify({ success: true, amount: result.modifiedCount  }))
       })
     }
-      
-
   } catch (ex) {
     console.log(ex.message)
   }
 })
 
-router.get("/test",async (req,res)=>{
-  
-  const users = await findByQuery()
-  console.log(users)
-  res.send(users)
-})
 
-router.post('/add', (req, res) => {
+router.post('/add', async (req, res) => {
   try {
 
     const body = { ...req.body }
     if (!body.password || !body.username) throw { message: "username or password not given" }
 
-    bcrypt.hash(body.password, 10, (err, hashed) => {
+    bcrypt.hash(body.password, 10, async (err, hashed) => {
       if (err) throw err
       body.password = hashed
-      addByObject('users', { ...body }, () => { res.end(`successfully added user: ${body.username} with hash: ${hashed}`) })
+      const result = await addByObject('users', { ...body })
+      res.end(`successfully added user: ${body.username} with hash: ${hashed} and _id: ${result.insertedId}`)
     })
   } catch (ex) {
     console.log(ex.message)

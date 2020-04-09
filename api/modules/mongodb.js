@@ -3,54 +3,52 @@ const ObjectId = require('mongodb').ObjectId
 const connectionURL = 'mongodb://127.0.0.1:27017/'
 
 
-const connectMongo = (coll, cb) => {
-  mongoClient.connect(connectionURL, (err, db) => {
-    console.log("connected to ", connectionURL)
-    const restdb = db.db("restdb")
-    const collection = restdb.collection(coll)
-    if (err) {
-      db.close()
-      console.log("closing connection")
-      throw err
-    }
-    cb(collection)
-    db.close()
-  })
-}
-
-
 async function findByQuery(coll, query){
-  return new Promise((res,rej)=>{
-    mongoClient.connect(connectionURL,(err,db)=>{
-      res(db.db('restdb').collection(coll).find(query).toArray())
-    })
-  })
-}
-
-
-const removeById = (coll, id, cb) => {
   try{
-    connectMongo(coll,mongo=>{
-      mongo.deleteMany({_id:new ObjectId(id)}).then(res=>cb(res))
+    return new Promise((res,rej)=>{
+      mongoClient.connect(connectionURL,(err,db)=>{
+        res(db.db('restdb').collection(coll).find(query).toArray())
+      })
     })
   }catch(ex){
-    console.log(ex.message)
+    console.log(`[mongodb] findByQuery -> ( ${ex.message} )`)
   }
 }
 
-const addByObject = (coll,object,cb)=>{
-  connectMongo(coll,mongo=>{
-    mongo.insertOne( object ).then(res=>{cb(res)})
-  })
-}
 
-const updateByObject = (coll,id,object,cb)=>{
+const removeById = async (coll, id) => {
   try{
-    connectMongo(coll,mongo=>{
-      mongo.updateMany({_id:new ObjectId(id)},{$set:object}).then(res=>cb(res))
+    return new Promise((res,rej)=>{
+      mongoClient.connect(connectionURL,(err,db)=>{
+        res(db.db('restdb').collection(coll).deleteMany({_id:new ObjectId(id)}))
+      })
     })
   }catch(ex){
-    console.log(ex.message)
+    console.log(`[mongodb] removeById -> ( ${ex.message} )`)
+  }
+}
+
+const addByObject = async (coll,object,cb)=>{
+  try{
+    return new Promise((res,rej)=>{
+      mongoClient.connect(connectionURL,(err,db)=>{
+        res(db.db('restdb').collection(coll).insertOne(object))
+      })
+    })
+  }catch(ex){
+    console.log(`[mongodb] addByObject -> ( ${ex.message} )`)
+  }
+}
+
+const updateByObject = async (coll,id,object,cb)=>{
+  try{
+    return new Promise((res,rej)=>{
+      mongoClient.connect(connectionURL,(err,db)=>{
+        res(db.db('restdb').collection(coll).updateMany({_id:new ObjectId(id)},{$set:object}))
+      })
+    })
+  }catch(ex){
+    console.log(`[mongodb] updateByObject -> ( ${ex.message} )`)
   }
 }
 
