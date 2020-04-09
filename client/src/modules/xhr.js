@@ -1,8 +1,7 @@
-const xhrSendRequest = (url,body={},cb=()=>{})=> {
+const xhrSendRequest = (method="POST",url,body={},cb=()=>{})=> {
     try{
-
         var xhr = new XMLHttpRequest();
-        xhr.open("POST", url);
+        xhr.open(method, url);
         xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
         xhr.onreadystatechange = function () {
             if(xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {

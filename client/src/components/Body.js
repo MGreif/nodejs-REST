@@ -36,16 +36,16 @@ export default class Body extends React.Component {
   }
 
   deleteUser(id){
-    xhrSendRequest('http://localhost:8080/users/delete/'+id,{},()=>this.getUsers())
+    xhrSendRequest("delete",'http://localhost:8080/users/delete/'+id,{},()=>this.getUsers())
     this.getUsers()
   }
 
   saveUser(content){
-    xhrSendRequest('http://localhost:8080/users/add',content,()=>this.getUsers())
+    xhrSendRequest("POST",'http://localhost:8080/users/add',content,()=>this.getUsers())
   }
 
   updateUser(id,content){
-    xhrSendRequest('http://localhost:8080/users/update/'+id,{id,content},()=>this.getUsers())
+    xhrSendRequest("POST",'http://localhost:8080/users/update/'+id,{id,content},()=>this.getUsers())
   }
 
   componentDidMount(){
