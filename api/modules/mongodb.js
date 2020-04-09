@@ -19,28 +19,14 @@ const connectMongo = (coll, cb) => {
 }
 
 
-
-
-
-async function findMongoData(){
+async function findByQuery(coll, query){
   return new Promise((res,rej)=>{
     mongoClient.connect(connectionURL,(err,db)=>{
-      resolve(db.db('restdb').collection('users').find({}).toArray())
+      res(db.db('restdb').collection(coll).find(query).toArray())
     })
   })
 }
 
-
-
-
-
-const findByQuery = (coll, query, cb) => {
-  connectMongo(coll,connection=>{
-    connection.find(query).toArray((err, result) => {
-      cb(result)
-    })
-  })
-}
 
 const removeById = (coll, id, cb) => {
   try{

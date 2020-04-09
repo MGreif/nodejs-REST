@@ -4,23 +4,23 @@ var bcrypt = require('bcrypt')
 var { findByQuery, removeById, addByObject, updateByObject } = require('../modules/mongodb')
 var { userReducer } = require('../modules/reducer')
 /* GET users listing. */
-router.post('/login', function (req, res, next) {
+router.post('/login', async function (req, res, next) {
   try {
     const { username, password } = req.body
-    findByQuery("users", { username }, (result) => {
-      if (result.length === 0) {
-        res.end(JSON.stringify({ granted: false, message: 'incorrect username or password' }))
-      } else {
-        const user = result[0]
-        bcrypt.compare(password, user.password, (err, match) => {
-          if (match) {
-            res.end(JSON.stringify({ granted: true, user: userReducer(user) }))
-          } else {
-            res.end(JSON.stringify({ granted: false, message: "incorrect username or password" }))
-          }
-        })
-      }
-    })
+    const result = await findByQuery("users", { username })
+    console.log(result)
+    if (result.length === 0) {
+      res.end(JSON.stringify({ granted: false, message: 'incorrect username or password' }))
+    } else {
+      const user = result[0]
+      bcrypt.compare(password, user.password, (err, match) => {
+        if (match) {
+          res.end(JSON.stringify({ granted: true, user: userReducer(user) }))
+        } else {
+          res.end(JSON.stringify({ granted: false, message: "incorrect username or password" }))
+        }
+      })
+    }
   } catch (ex) {
     console.log(`couldnt get [/login] ${ex.message}`)
     res.end(JSON.stringify({ granted: false, error: ex.message }))
@@ -53,6 +53,13 @@ router.post('/update/:id', (req, res) => {
   }
 })
 
+router.get("/test",async (req,res)=>{
+  
+  const users = await findByQuery()
+  console.log(users)
+  res.send(users)
+})
+
 router.post('/add', (req, res) => {
   try {
 
@@ -69,8 +76,9 @@ router.post('/add', (req, res) => {
   }
 })
 
-router.get('/', function (req, res, next) {
-  findByQuery('users', {}, (r) => { res.send(JSON.stringify(r.map(x => userReducer(x)))) })
+router.get('/', async (req, res, next) => {
+  const users = await findByQuery('users', {})
+  res.send(JSON.stringify(users.map(x => userReducer(x))))
 });
 
 
