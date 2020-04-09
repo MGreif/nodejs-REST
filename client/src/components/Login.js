@@ -62,7 +62,7 @@ export const LoginDialog = (props) => {
       <Card className={classes.dialog}>
         <div className={classes.innerContent}>
           <TextField onChange={e => setUsername(e.target.value)} className={classes.textField} label="Username" variant="outlined" />
-          <TextField onChange={e => setPassword(e.target.value)} className={classes.textField} label="Password" variant="outlined" />
+          <TextField onChange={e => setPassword(e.target.value)} className={classes.textField} label="Password" variant="outlined" type="password" />
           <Button onClick={login} className={classes.button} variant="contained" color="primary">
             Login
       </Button>
