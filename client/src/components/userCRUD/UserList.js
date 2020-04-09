@@ -10,6 +10,7 @@ import Paper from '@material-ui/core/Paper';
 import DeleteIcon from '@material-ui/icons/Delete';
 import DialogComponent from '../Dialog'
 import UserEdit from './UserEdit'
+import {StateInput} from '../stateInput'
 const StyledTableCell = withStyles(theme => ({
   head: {
     backgroundColor: '#3f51b5',
@@ -37,48 +38,67 @@ const useStyles = makeStyles({
   },
 });
 
-export default function UserList(props) {
+export default class UserList extends React.Component {
 
-  const deleteUser = (id)=>{
-    props.deleteUser(id)
+  constructor(props){
+    super(props)
+    this.state = {
+      search:null
+    }
+  }
+
+  deleteUser = (id)=>{
+    this.props.deleteUser(id)
   }
   
+  classes = () => useStyles();
 
-  const classes = useStyles();
-  return (
-    <TableContainer component={Paper}>
-      <Table className={classes.table} aria-label="customized table">
-        <TableHead>
-          <TableRow>
-            <StyledTableCell>Username</StyledTableCell>
-            <StyledTableCell align="right">First Name</StyledTableCell>
-            <StyledTableCell align="right">Last Name</StyledTableCell>
-            <StyledTableCell align="right">Age</StyledTableCell>
-            <StyledTableCell align="right">ID</StyledTableCell>
-            <StyledTableCell align="right"></StyledTableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {props.users?props.users.map(user => (
-            <StyledTableRow key={user._id}>
-              <StyledTableCell component="th" scope="row">{user.username}</StyledTableCell>
-              <StyledTableCell align="right">{user.namef}</StyledTableCell>
-              <StyledTableCell align="right">{user.namel}</StyledTableCell>
-              <StyledTableCell align="right">{user.age}</StyledTableCell>
-              <StyledTableCell align="right">{user._id}</StyledTableCell>
-              <StyledTableCell>
-                <DialogComponent opener={<DeleteIcon fontSize="small" />} 
-                dialogText="Wirklich löschen?" 
-                options={[
-                  {name:"Abbrechen"},
-                  {name:"Löschen",action:()=>{deleteUser(user._id)}},
-                  ]}/>
-                <UserEdit user={user} updateUser={(id,content)=>props.updateUser(id,content)} getUsers={props.getUsers}/>
-        </StyledTableCell>
-            </StyledTableRow>
-          )):null}
-        </TableBody>
-      </Table>
-    </TableContainer>
-  );
+  handleChange = (e) => {
+    this.setState({search:e.target.value})
+    
+  }
+
+  render(){
+    return (
+      <>
+      <StateInput handleChange={this.handleChange} label="Search"/>
+      <TableContainer component={Paper}>
+        <Table className={this.classes.table} aria-label="customized table">
+          <TableHead>
+            <TableRow>
+              <StyledTableCell>Username</StyledTableCell>
+              <StyledTableCell align="right">First Name</StyledTableCell>
+              <StyledTableCell align="right">Last Name</StyledTableCell>
+              <StyledTableCell align="right">Age</StyledTableCell>
+              <StyledTableCell align="right">ID</StyledTableCell>
+              <StyledTableCell align="right"></StyledTableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {this.props.users?this.props.users.filter(x=>this.state.search!=null
+            ?
+            x.username.match(new RegExp("^"+this.state.search,"ig")):x).map(user => (
+              <StyledTableRow key={user._id}>
+                <StyledTableCell component="th" scope="row">{user.username}</StyledTableCell>
+                <StyledTableCell align="right">{user.namef}</StyledTableCell>
+                <StyledTableCell align="right">{user.namel}</StyledTableCell>
+                <StyledTableCell align="right">{user.age}</StyledTableCell>
+                <StyledTableCell align="right">{user._id}</StyledTableCell>
+                <StyledTableCell>
+                  <DialogComponent opener={<DeleteIcon fontSize="small" />} 
+                  dialogText="Wirklich löschen?" 
+                  options={[
+                    {name:"Abbrechen"},
+                    {name:"Löschen",action:()=>{this.deleteUser(user._id)}},
+                    ]}/>
+                  <UserEdit user={user} updateUser={(id,content)=>this.props.updateUser(id,content)} getUsers={this.props.getUsers}/>
+          </StyledTableCell>
+              </StyledTableRow>
+            )):null}
+          </TableBody>
+        </Table>
+      </TableContainer>
+    </>
+    );
+  }
 }

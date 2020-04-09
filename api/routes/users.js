@@ -69,7 +69,7 @@ router.post('/add', async (req, res) => {
       if (err) throw err
       body.password = hashed
       const result = await addByObject('users', { ...body })
-      res.end(`successfully added user: ${body.username} with hash: ${hashed} and _id: ${result.insertedId}`)
+      res.end(JSON.stringify({username:body.username, hash:hashed, _id:result.insertedId}))
     })
   } catch (ex) {
     console.log(`couldnt post [users/add] ${ex.message}`)

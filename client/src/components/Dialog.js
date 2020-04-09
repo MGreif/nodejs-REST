@@ -7,7 +7,7 @@ import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import IconButton from '@material-ui/core/IconButton';
 
-export default function AlertDialog(props) {
+export default function DialogComponent(props) {
   const [open, setOpen] = React.useState(false);
 
   const handleClickOpen = () => {
