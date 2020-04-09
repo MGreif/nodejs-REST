@@ -7,7 +7,7 @@ var cors = require('cors')
 var indexRouter = require('./routes/index');
 var bodyParser = require('body-parser') 
 var usersRouter = require('./routes/users');
-
+var serviceRouter = require('./routes/service')
 var app = express();
 app.use(function(req, res, next) {
   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
@@ -25,6 +25,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
+app.use('/service', serviceRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

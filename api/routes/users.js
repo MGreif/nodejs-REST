@@ -22,14 +22,18 @@ router.post('/login', async function (req, res, next) {
       })
     }
   } catch (ex) {
-    console.log(`couldnt get [/login] ${ex.message}`)
+    console.log(`couldnt get [users/login] ${ex.message}`)
     res.end(JSON.stringify({ granted: false, error: ex.message }))
   }
 });
 
-router.post('/delete/:id', async (req, res) => {
-  const result = await removeById('users', req.params.id)
-  res.end(JSON.stringify({ success: true, amount: result.deletedCount }))
+router.delete('/delete/:id', async (req, res) => {
+  try{
+    const result = await removeById('users', req.params.id)
+    res.end(JSON.stringify({ success: true, amount: result.deletedCount }))
+  }catch(ex){
+    console.log(`couldnt post [users/delete/:id] ${ex.message}`)
+  }
 })
 
 router.post('/update/:id', async (req, res) => {
@@ -50,7 +54,7 @@ router.post('/update/:id', async (req, res) => {
       })
     }
   } catch (ex) {
-    console.log(ex.message)
+    console.log(`couldnt post [users/updated/:id] ${ex.message}`)
   }
 })
 
@@ -68,13 +72,17 @@ router.post('/add', async (req, res) => {
       res.end(`successfully added user: ${body.username} with hash: ${hashed} and _id: ${result.insertedId}`)
     })
   } catch (ex) {
-    console.log(ex.message)
+    console.log(`couldnt post [users/add] ${ex.message}`)
   }
 })
 
 router.get('/', async (req, res, next) => {
-  const users = await findByQuery('users', {})
-  res.send(JSON.stringify(users.map(x => userReducer(x))))
+  try{
+    const users = await findByQuery('users', {})
+    res.send(JSON.stringify(users.map(x => userReducer(x))))
+  }catch(ex){
+    console.log(`couldnt get [users/] ${ex.message}`)
+  }
 });
 
 
