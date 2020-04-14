@@ -4,7 +4,7 @@ import Typography from '@material-ui/core/Typography';
 import UserList from './userCRUD/UserList'
 import UserAdd from './userCRUD/UserAdd'
 import {xhrSendRequest} from '../modules/xhr'
-
+import TodoList from './todoCRUD/TodoList'
 
 export default class Body extends React.Component {
   constructor(props) {
@@ -63,7 +63,7 @@ export default class Body extends React.Component {
         <div>TEST ROUTE2</div>
       </this.TabPanel>
       <this.TabPanel value={this.props.value} index={2}>
-        Item Three
+        <TodoList/>
       </this.TabPanel>
       <this.TabPanel value={this.props.value} index={3}>
         <UserList users={this.state.userList} getUsers={this.getUsers} updateUser={(id,content)=>this.updateUser(id,content)} deleteUser={id=>this.deleteUser(id)}/>

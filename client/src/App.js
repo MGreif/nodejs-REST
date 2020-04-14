@@ -41,7 +41,7 @@ class App extends React.Component {
           <Tabs value={this.state.tabValue} onChange={this.handleTabChange} aria-label="simple tabs example">
             <Tab label="Item One"  />
             <Tab label="Item Two"  />
-            <Tab label="Item Three" />
+            <Tab label="Todos" />
             <Tab label="Users" />
           </Tabs>
         </AppBar>
