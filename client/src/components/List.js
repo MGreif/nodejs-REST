@@ -84,15 +84,17 @@ export default class List extends React.Component {
                   onChange={(e)=>{this.checkMultiselect(elem._id)}}
                 /></StyledTableCell>}
               {Object.values(elem).map(e => <StyledTableCell>{e.toString()}</StyledTableCell>)}
-              {this.props.delete?<StyledTableCell align="center">
-                  <DialogComponent opener={<DeleteIcon fontSize="small" />} 
+              <StyledTableCell align="center">
+                <div className='flex-box row'>
+              {this.props.delete&&<DialogComponent opener={<DeleteIcon fontSize="small" />} 
                   dialogHeader="Löschen"
                   dialogText="Wirklich löschen?" 
                   options={[
                     {name:"Abbrechen"},
                     {name:"Löschen",action:()=>{this.props.delete(elem._id)}},
-                    ]}/>
-          </StyledTableCell>:null}
+                    ]}/>}
+              </div>
+          </StyledTableCell>
               </StyledTableRow>
             ))}
           </TableBody>

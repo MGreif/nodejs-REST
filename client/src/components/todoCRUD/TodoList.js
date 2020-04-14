@@ -2,6 +2,7 @@ import React, { useEffect } from 'react'
 import List from '../List'
 import {xhrSendRequest} from '../../modules/xhr'
 import TodoAdd from './TodoAdd'
+import TodoEdit from './TodoEdit'
 export default function TodoList(props){
 
 
@@ -25,9 +26,16 @@ export default function TodoList(props){
     xhrSendRequest('POST','http://localhost:8080/todos/add',data,getData);
   }
 
+  const update = (id,data) => {
+    const content = {...data}
+    const {Eid} = {...content}
+    delete content.id
+    xhrSendRequest('POST','http://localhost:8080/todos/update/'+Eid,content,getData);
+  }
+
   return(
   <>
-  <List multiselect data={data} delete={deleteEntry} add={<TodoAdd save={(data)=>save(data)}/>}/>
+  <List multiselect data={data} delete={deleteEntry} edit={<TodoEdit update={(data)=>update(data)}/>} add={<TodoAdd save={(data)=>save(data)}/>}/>
   </>)
 
 }
