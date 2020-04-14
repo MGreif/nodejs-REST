@@ -1,0 +1,7 @@
+.flex-box{
+  display: flex;
+}
+
+.row{
+  flex-direction: row;
+}

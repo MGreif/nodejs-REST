@@ -27,7 +27,7 @@ export default function TodoList(props){
 
   return(
   <>
-  <List data={data} delete={deleteEntry} add={<TodoAdd save={(data)=>save(data)}/>}/>
+  <List multiselect data={data} delete={deleteEntry} add={<TodoAdd save={(data)=>save(data)}/>}/>
   </>)
 
 }

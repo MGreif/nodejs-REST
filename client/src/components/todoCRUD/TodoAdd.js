@@ -22,10 +22,11 @@ export default function TodoAdd(props){
 
   const handleClose = () => {
     setOpen(false);
+    setTodoData({todo:null,done:false})
   };
 
   const save = () =>{
-    if(Object.values(todoData).every(x=>x !== null)){
+    if(Object.values(todoData).every(x=>x !== null && x !== "" && !x.toString().match(/^\s+$/ig))){
       props.save(todoData)
     }
     handleClose()
