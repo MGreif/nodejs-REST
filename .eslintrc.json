@@ -1,0 +1,32 @@
+{
+    "env": {
+        "es6": true,
+        "browser": true,
+        "mocha": true,
+        "jest": true
+    },
+    "parser": "babel-eslint",
+    "extends": ["standard", "standard-react"],
+    "globals": {
+        "Atomics": "readonly",
+        "SharedArrayBuffer": "readonly"
+    },
+    "parserOptions": {
+        "ecmaFeatures": {
+            "jsx": true
+        },
+        "ecmaVersion": 2018,
+        "sourceType": "module"
+    },
+    "plugins": [
+        "react",
+        "react-hooks"
+    ],
+    "rules": {
+        "no-prototype-builtins": "off",
+        "no-void": "off",
+        "react/prop-types": "off",
+        "react/jsx-handler-names": "off",
+        "react-hooks/exhaustive-deps": "off"
+    }
+}

@@ -22,7 +22,7 @@ export default function TodoList(props){
   }
 
   const save = (data) =>{
-    xhrSendRequest('POST','http://localhost:8080/todos/add',data,getData)
+    xhrSendRequest('POST','http://localhost:8080/todos/add',data,getData);
   }
 
   return(
