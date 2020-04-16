@@ -8,14 +8,15 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
 import IconButton from '@material-ui/core/IconButton';
 import Checkbox from '@material-ui/core/Checkbox';
+import EditIcon from '@material-ui/icons/Edit';
 
 export default function TodoEdit(props){
 
   const [open, setOpen] = React.useState(false);
   const [todoData,setTodoData] = React.useState({
-    todo:props.todo.content,
-    done:props.todo.done,
-    id:props.todo._id
+    todo:props.content.todo,
+    done:props.content.done,
+    id:props.content._id
   });
   const handleClickOpen = () => {
     setOpen(true);
@@ -23,7 +24,6 @@ export default function TodoEdit(props){
 
   const handleClose = () => {
     setOpen(false);
-    setTodoData({todo:null,done:false})
   };
 
   const update = () =>{
@@ -35,7 +35,7 @@ export default function TodoEdit(props){
   return(
     <Fragment>
        <IconButton size="medium" onClick={handleClickOpen}>
-        <AddCircleOutlineIcon/>
+        <EditIcon/>
       </IconButton>
 
       {open?
@@ -47,11 +47,13 @@ export default function TodoEdit(props){
             autoFocus
             id="todo"
             label="Todo"
+            placeholder={todoData.todo}
             type="text"
             onChange={(e)=>{setTodoData({...todoData, [e.target.id]:e.target.value})}}
           />
           <Checkbox
             color="primary"
+            checked={todoData.done}
             id="done"
             label="Done?"
             onChange={(e)=>{setTodoData({...todoData, [e.target.id]:e.target.checked})}}

@@ -17,8 +17,12 @@ router.delete('/delete/:id', async (req, res) => {
 router.post('/update/:id', async (req, res) => {
   try {
     const body = req.body
-    const content = { ...body.content }
-    console.log(content)
+    const content = Object.entries(body).reduce((acc,curr)=>{
+      acc[curr[0].toString()] = curr[1].toString()
+      return acc
+    },{})
+    console.log('todos',req.params.id,content)
+    const result = await updateByObject('todos',req.params.id,content)
     res.end(JSON.stringify({ success: true, amount: result.modifiedCount  }))
   } catch (ex) {
     console.log(`couldnt post [todos/updated/:id] ${ex.message}`)

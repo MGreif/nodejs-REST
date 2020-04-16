@@ -42,6 +42,12 @@ export default class List extends React.Component {
 
   constructor(props){
     super(props)
+    this.multiselect = {
+      isActive:!!props.multiselect,
+      validAmount:1,
+      isValid:(curr) => (curr > this.multiselect.validAmount) && this.multiselect.isActive
+    }
+    this.isDeletable = !!props.delete
     this.state = {
       search:null,
       multiselect:[]
@@ -93,6 +99,7 @@ export default class List extends React.Component {
                     {name:"Abbrechen"},
                     {name:"Löschen",action:()=>{this.props.delete(elem._id)}},
                     ]}/>}
+                    {this.props.edit(elem)}
               </div>
           </StyledTableCell>
               </StyledTableRow>
@@ -102,7 +109,7 @@ export default class List extends React.Component {
       </TableContainer>
       <div className="flex-box row">
       {this.props.add} 
-      {(this.props.multiselect&&this.state.multiselect.length > 2)&&
+      {this.multiselect.isValid(this.state.multiselect.length)&&
         <DialogComponent opener={<DeleteIcon fontSize="small" />} 
         dialogHeader="Löschen"
         dialogText={`Wirklich alle ${this.state.multiselect.length} Elemente löschen?`} 
