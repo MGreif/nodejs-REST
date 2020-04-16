@@ -78,7 +78,7 @@ export default class List extends React.Component {
             <TableRow>
               {this.props.multiselect?<StyledTableCell align="center"></StyledTableCell>:null}
               {Object.keys(this.props.data[0]).map(elem=><StyledTableCell>{elem}</StyledTableCell>)}
-              {this.props.delete?<StyledTableCell align="center"></StyledTableCell>:null}
+              {this.props.delete||this.props.edit?<StyledTableCell align="center"></StyledTableCell>:null}
             </TableRow>
           </TableHead>
           <TableBody>
@@ -90,7 +90,7 @@ export default class List extends React.Component {
                   onChange={(e)=>{this.checkMultiselect(elem._id)}}
                 /></StyledTableCell>}
               {Object.values(elem).map(e => <StyledTableCell>{e.toString()}</StyledTableCell>)}
-              <StyledTableCell align="center">
+              {(this.props.delete || this.props.edit)&&<StyledTableCell align="center">
                 <div className='flex-box row'>
               {this.props.delete&&<DialogComponent opener={<DeleteIcon fontSize="small" />} 
                   dialogHeader="Löschen"
@@ -99,16 +99,16 @@ export default class List extends React.Component {
                     {name:"Abbrechen"},
                     {name:"Löschen",action:()=>{this.props.delete(elem._id)}},
                     ]}/>}
-                    {this.props.edit(elem)}
+                    {this.props.edit&&this.props.edit(elem)}
               </div>
-          </StyledTableCell>
+          </StyledTableCell>}
               </StyledTableRow>
             ))}
           </TableBody>
         </Table>
       </TableContainer>
       <div className="flex-box row">
-      {this.props.add} 
+      {this.props.hasOwnProperty("add")&&this.props.add} 
       {this.multiselect.isValid(this.state.multiselect.length)&&
         <DialogComponent opener={<DeleteIcon fontSize="small" />} 
         dialogHeader="Löschen"

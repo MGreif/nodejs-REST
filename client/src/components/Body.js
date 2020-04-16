@@ -31,27 +31,6 @@ export default class Body extends React.Component {
   }
 
 
-  getUsers = () => {
-    fetch('http://localhost:8080/users/').then(res=>res.json()).then(res=>this.setState({userList:[...res]}))
-  }
-
-  deleteUser(id){
-    xhrSendRequest("delete",'http://localhost:8080/users/delete/'+id,{},()=>this.getUsers())
-    this.getUsers()
-  }
-
-  saveUser(content){
-    xhrSendRequest("POST",'http://localhost:8080/users/add',content,()=>this.getUsers())
-  }
-
-  updateUser(id,content){
-    xhrSendRequest("POST",'http://localhost:8080/users/update/'+id,{id,content},()=>this.getUsers())
-  }
-
-  componentDidMount(){
-    this.getUsers()
-  }
-
 
 
   render() {
@@ -67,7 +46,6 @@ export default class Body extends React.Component {
       </this.TabPanel>
       <this.TabPanel value={this.props.value} index={3}>
         <UserList users={this.state.userList} getUsers={this.getUsers} updateUser={(id,content)=>this.updateUser(id,content)} deleteUser={id=>this.deleteUser(id)}/>
-        <UserAdd saveUser={content=>this.saveUser(content)} getUsers={this.getUsers}/>
       </this.TabPanel>
     </Fragment>
   }

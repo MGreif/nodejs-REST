@@ -16,7 +16,8 @@ export default function EditUser(props){
     namel:props.user.namel,
     age:props.user.age,
     username:props.user.username,
-    password:props.user.password
+    password:props.user.password,
+    _id:props.user._id
   });
   const handleClickOpen = () => {
     setOpen(true);
@@ -28,7 +29,7 @@ export default function EditUser(props){
 
   const updateUser = () =>{
     if(Object.values(userData).every(x=>x !== null)){
-      props.updateUser(props.user._id,userData)
+      props.update(userData)
     }
     handleClose()
   }

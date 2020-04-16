@@ -36,7 +36,6 @@ export default function TodoAdd(props){
        <IconButton size="medium" onClick={handleClickOpen}>
         <AddCircleOutlineIcon/>
       </IconButton>
-
       {open?
       <Fragment>
              <Dialog open={open} onClose={handleClose} aria-labelledby="form-dialog-title">

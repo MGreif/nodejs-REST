@@ -6,7 +6,7 @@ const connectionURL = 'mongodb://127.0.0.1:27017/'
 async function findByQuery(coll, query){
   try{
     return new Promise((res,rej)=>{
-      mongoClient.connect(connectionURL,(err,db)=>{
+      mongoClient.connect(connectionURL, { useUnifiedTopology: true }, (err,db)=>{
         res(db.db('restdb').collection(coll).find(query).toArray())
       })
     })
@@ -19,7 +19,7 @@ async function findByQuery(coll, query){
 const removeById = async (coll, id) => {
   try{
     return new Promise((res,rej)=>{
-      mongoClient.connect(connectionURL,(err,db)=>{
+      mongoClient.connect(connectionURL, { useUnifiedTopology: true }, (err,db)=>{
         res(db.db('restdb').collection(coll).deleteMany({_id:new ObjectId(id)}))
       })
     })
@@ -31,7 +31,7 @@ const removeById = async (coll, id) => {
 const addByObject = async (coll,object,cb)=>{
   try{
     return new Promise((res,rej)=>{
-      mongoClient.connect(connectionURL,(err,db)=>{
+      mongoClient.connect(connectionURL, { useUnifiedTopology: true }, (err,db)=>{
         res(db.db('restdb').collection(coll).insertOne(object))
       })
     })
@@ -43,7 +43,7 @@ const addByObject = async (coll,object,cb)=>{
 const updateByObject = async (coll,id,object,cb)=>{
   try{
     return new Promise((res,rej)=>{
-      mongoClient.connect(connectionURL,(err,db)=>{
+      mongoClient.connect(connectionURL, { useUnifiedTopology: true }, (err,db)=>{
         res(db.db('restdb').collection(coll).updateMany({_id:new ObjectId(id)},{$set:object}))
       })
     })
