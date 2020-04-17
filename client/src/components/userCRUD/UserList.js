@@ -32,10 +32,6 @@ export default function UserList(props) {
     xhrSendRequest("delete",'http://localhost:8080/users/delete/'+id,{},getUsers)
   }
 
-  function saveUser(data){
-    xhrSendRequest("POST",'http://localhost:8080/users/add',data,getUsers)
-  }
-
   function updateUser(data){
     const content = {...data}
     const {_id} = content
@@ -43,5 +39,5 @@ export default function UserList(props) {
     xhrSendRequest("POST",'http://localhost:8080/users/update/'+_id,{content},getUsers)
   }
 
-  return <List multiselect delete={deleteUser} add={<UserAdd saveUser={saveUser}/>} data={data} edit={(user)=><UserEdit user={user} update={updateUser} />}/>
+  return <List multiselect delete={deleteUser} add={<UserAdd getData={getUsers}/>} data={data} edit={(user)=><UserEdit user={user} update={updateUser} />}/>
 }

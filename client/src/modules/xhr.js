@@ -5,7 +5,7 @@ const xhrSendRequest = (method="POST",url,body={},cb=()=>{})=> {
         xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
         xhr.onreadystatechange = function () {
             if(xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
-                cb(xhr)
+                cb(xhr.response)
             }
         };
         xhr.send(JSON.stringify(body));

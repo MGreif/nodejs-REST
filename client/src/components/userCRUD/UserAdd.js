@@ -7,15 +7,16 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
 import IconButton from '@material-ui/core/IconButton';
+import {xhrSendRequest} from '../../modules/xhr'
 
 export default function AddUser(props){
 
   const [open, setOpen] = React.useState(false);
   const [userData,setUserData] = React.useState({
+    username:null,
+    age:null,
     namef:null,
     namel:null,
-    age:null,
-    username:null,
     password:null
   });
   const handleClickOpen = () => {
@@ -26,9 +27,12 @@ export default function AddUser(props){
     setOpen(false);
   };
 
+  function saveUser(data){
+  }
+
   const save = () =>{
     if(Object.values(userData).every(x=>x !== null)){
-      props.saveUser(userData)
+      xhrSendRequest("POST",'http://localhost:8080/users/add',userData,props.getData)
     }
     handleClose()
   }

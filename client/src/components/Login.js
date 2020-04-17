@@ -46,7 +46,7 @@ export const LoginDialog = (props) => {
   const login = () => {
     if (username && password) {
       xhrSendRequest("post","http://localhost:8080/users/login",{username,password},(x)=>{
-        const response = JSON.parse(x.responseText)
+        const response = JSON.parse(x)
         console.log(response)
         if(response.granted === true){
           props.onLogin({...response.user})
